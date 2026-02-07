@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Valentine 💌</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(180deg, #ffcceb, #ffadce);
+      color: #333;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    section {
+      padding: 70px 20px;
+      max-width: 900px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 400;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 25px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* 💌 ENVELOPE */
+    .envelope-container {
+      margin-top: 40px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .envelope {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      margin: auto;
+      background: #ff6397;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(255, 99, 151, 0.5);
+    }
+
+    /* Lid (flap) */
+    .envelope-lid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(
+        to bottom,
+        #ff6397 0%,
+        #ff6397 50%,
+        rgba(255,255,255,0.35) 50%,
+        rgba(255,255,255,0.35) 100%
+      );
+      transform-origin: top;
+      transition: transform 0.8s ease;
+      z-index: 3;
+      border-radius: 16px 16px 0 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    /* Letter */
+    .letter {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 88%;
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+      transition: all 0.9s ease;
+      z-index: 2;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .envelope.open .letter {
+      opacity: 1;
+      visibility: visible;
+      bottom: 12px;
+    }
+
+    .envelope.open .envelope-lid {
+      transform: rotateX(180deg);
+    }
+
+    .hint {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: #ff6397;
+    }
+
+    /* 📸 GALLERY */
+    .gallery {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .gallery img {
+      width: 240px;
+      height: 330px;
+      object-fit: cover;
+      border-radius: 22px;
+      box-shadow: 0 14px 35px rgba(255,99,151,0.45);
+      transition: transform 0.4s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    /* 💖 BUTTON */
+    .valentine-btn {
+      background: #ff6397;
+      color: white;
+      border: none;
+      padding: 16px 48px;
+      font-size: 1.35rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 12px 28px rgba(255,99,151,0.6);
+    }
+
+    .valentine-btn:hover {
+      background: #ff4f89;
+      transform: scale(1.08);
+    }
+
+    /* 💗 FLOATING HEARTS */
+    .floating-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -40px;
+      font-size: 18px;
+      color: #ff6397;
+      animation: floatHeart linear infinite;
+      opacity: 0.75;
+    }
+
+    @keyframes floatHeart {
+      to {
+        transform: translateY(-110vh) translateX(40px);
+        opacity: 0;
+      }
+    }
+
+    /* 💥 BURST */
+    .burst-heart {
+      position: fixed;
+      font-size: 28px;
+      color: #ff6397;
+      animation: burst 3s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes burst {
+      to {
+        transform: translateY(-420px) scale(1.7);
+        opacity: 0;
+      }
+    }
+
+    audio {
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Floating hearts -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <section>
+    <h1>Девушке, делающей мою жизнь лучше 💕</h1>
+  </section>
+
+  <section>
+    <h2>Моё письмо тебе 💌</h2>
+    <div class="envelope-container" onclick="openEnvelope(event)">
+      <div class="envelope" id="envelope">
+        <div class="envelope-lid"></div>
+        <div class="letter">
+          <p>
+            Пепе шнейне ватафа
+          </p>
+        </div>
+      </div>
+      <div class="hint">Tap to open 💗</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Мы ✨</h2>
+    <div class="gallery">
+      <img src="photo1.jpg">
+      <img src="photo2.jpg">
+      <img src="photo3.jpg">
+    </div>
+  </section>
+
+  <section>
+    <h2>Will you be my Valentine? 💖</h2>
+    <button class="valentine-btn" onclick="loveBurst()">YES 💘</button>
+  </section>
+
+  <section>
+    <audio controls>
+      <source src="piano.mp3" type="audio/mpeg">
+    </audio>
+  </section>
+
+  <script>
+    function openEnvelope(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      document.getElementById("envelope").classList.toggle("open");
+    }
+
+    function createFloatingHeart() {
+      const heart = document.createElement("div");
+      heart.className = "floating-heart";
+      heart.innerText = "💗";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 7 + Math.random() * 6 + "s";
+      heart.style.fontSize = 14 + Math.random() * 22 + "px";
+      document.getElementById("floatingHearts").appendChild(heart);
+      setTimeout(() => heart.remove(), 13000);
+    }
+
+    setInterval(createFloatingHeart, 900);
+
+    function loveBurst() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement("div");
+        heart.className = "burst-heart";
+        heart.innerText = "💖";
+        heart.style.left = 40 + Math.random() * 20 + "vw";
+        heart.style.bottom = "120px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }
+    }
+  </script>
+</body>
+</html>
