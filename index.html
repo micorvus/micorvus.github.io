@@ -195,8 +195,15 @@
       }
     }
 
-    audio {
-      margin-top: 25px;
+    /* Volume control */
+    .volume-control {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .volume-control input[type="range"] {
+      width: 150px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -224,6 +231,11 @@
     </div>
   </section>
 
+  <div class="volume-control">
+    <label for="volumeSlider">Volume: </label>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+  </div>
+
   <section>
     <h2>Мы ✨</h2>
     <div class="gallery">
@@ -238,43 +250,26 @@
     <button class="valentine-btn" onclick="loveBurst()">YES 💘</button>
   </section>
 
-  <section>
-    <audio controls>
-      <source src="piano.mp3" type="audio/mpeg">
-    </audio>
-  </section>
+  <!-- Hidden audio element -->
+  <audio id="backgroundMusic" loop>
+    <source src="piano.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    const volumeSlider = document.getElementById("volumeSlider");
+
     function openEnvelope(event) {
       event.preventDefault();
       event.stopPropagation();
       document.getElementById("envelope").classList.toggle("open");
+      backgroundMusic.volume = volumeSlider.value;
+      backgroundMusic.play();
     }
 
-    function createFloatingHeart() {
-      const heart = document.createElement("div");
-      heart.className = "floating-heart";
-      heart.innerText = "💗";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 7 + Math.random() * 6 + "s";
-      heart.style.fontSize = 14 + Math.random() * 22 + "px";
-      document.getElementById("floatingHearts").appendChild(heart);
-      setTimeout(() => heart.remove(), 13000);
-    }
-
-    setInterval(createFloatingHeart, 900);
-
-    function loveBurst() {
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement("div");
-        heart.className = "burst-heart";
-        heart.innerText = "💖";
-        heart.style.left = 40 + Math.random() * 20 + "vw";
-        heart.style.bottom = "120px";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 3000);
-      }
-    }
+    volumeSlider.addEventListener("input", function() {
+      backgroundMusic.volume = volumeSlider.value;
+    });
   </script>
 </body>
 </html>
